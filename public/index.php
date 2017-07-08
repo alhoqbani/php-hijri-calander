@@ -80,7 +80,7 @@ $mname = [
     "Zul Qida",
     "Zul Hijja",
 ];
-$month = 9;
+
 // obtain month, today date etc
 $month = (isset($month)) ? $month : date("n", time());
 $textmonth = $monthnames[$month - 1];
