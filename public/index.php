@@ -90,14 +90,15 @@ if ($key = array_search($monthName, $monthnames)) {
 $year = $_GET['year'] ?? null;
 
 // obtain month, today date etc
-$month = (isset($month)) ? $month : date("n", time());
+$currentMonth = date("n", time());
+$month = (isset($month)) ? $month : $currentMonth;
 $textmonth = $monthnames[$month - 1];
 
 $currentYear = date("Y", time());
 $year = (isset($year)) ? $year : $currentYear;
 
 $today = (isset($today)) ? $today : date("j", time());
-$today = ($month == date("n", time())) ? $today : 32;
+$today = ($month == $currentMonth && $year == $currentYear) ? $today : 32;
 
 // Setting how many days each month has
 if ((($month < 8) && ($month % 2 == 1)) || (($month > 7) && ($month % 2 == 0))) {
@@ -245,7 +246,7 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                         </td>
                     <?php endif; ?>
 
-                    <td class=" date-cell <?= $i == $today ? 'danger today' : 'active' ?>">
+                    <td class=" date-cell <?= $today == $i ? 'danger today' : 'active' ?>">
                         <?php
                         $date_hijri = date("$year-$month-$i");
                         list ($HDays, $HMonths, $HYear) = Hijri($date_hijri);
