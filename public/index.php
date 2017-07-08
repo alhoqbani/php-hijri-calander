@@ -81,12 +81,41 @@ $mname = [
     "Zul Hijja",
 ];
 
+$arabicDays = [
+  'الأحد',
+  'الإثنين',
+  'الثلاثاء',
+  'الأربعاء',
+  'الخميس',
+  'الجمعة',
+  'السبت'
+];
+
+$year = $_GET['year'] ?? null;
+$monthName = $_GET['month'] ?? null;
+
+if ($key = array_search($monthName, $monthnames)) {
+    $month = ++$key;
+}
+
 // obtain month, today date etc
-$month = (isset($month)) ? $month : date("n", time());
+$currentMonth = date("n", time());
+$month = (isset($month)) ? $month : $currentMonth;
 $textmonth = $monthnames[$month - 1];
-$year = (isset($year)) ? $year : date("Y", time());
+
+$currentYear = date("Y", time());
+$year = (isset($year)) ? $year : $currentYear;
+
 $today = (isset($today)) ? $today : date("j", time());
-$today = ($month == date("n", time())) ? $today : 32;
+$today = ($month == $currentMonth && $year == $currentYear) ? $today : 32;
+
+// Get current Date String
+$date_hijri = date("$currentYear-$currentMonth-$today");
+list ($HDays, $HMonths, $HYear) = Hijri($date_hijri);
+
+$currentDayIndex = date('w', time());
+$DateStringHijri = $arabicDays[$currentDayIndex] . " $HDays-$HMonths-$HYear هـ ";
+$DateStringGregorian = date('l F j, Y', time());
 
 // Setting how many days each month has
 if ((($month < 8) && ($month % 2 == 1)) || (($month > 7) && ($month % 2 == 0))) {
@@ -163,15 +192,59 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
 <body>
 <div class="container">
     <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <p>Change the month:</p>
+            <form class="form-inline" action="<?= $_SERVER['PHP_SELF'] ?>" method="get" role="form">
+                <div class="form-group form-group-sm">
+                    <label for="year" class="col-sm-1 control-label input-sm">Year</label>
+                    <div class="col-sm-2">
+                        <select class="form-control input-sm" id="year" name="year">
+                            <?php foreach (range($currentYear - 5, $currentYear + 5) as $yearOption) : ?>
+                                <option value="<?= $yearOption ?>" <?= $yearOption == $year ? 'selected' : '' ?>><?= $yearOption ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <label for="month" class="col-sm-1 control-label input-sm">Month</label>
+                    <div class="col-sm-3">
+                        <select class="form-control input-sm" id="month" name="month">
+                            <?php foreach ($monthnames as $monthOption) : ?>
+                                <option value="<?= $monthOption ?>" <?= $textmonth == $monthOption ? 'selected' : '' ?>><?= $monthOption ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary btn-xs">Select</button>
+                    </div>
+                    <div class="col-sm-2">
+                        <?php if ($month != $currentMonth || $year != $currentYear) { ?>
+                            <a href="<?= $_SERVER['PHP_SELF'] ?>" class="btn btn-success btn-xs pull-left">current month</a>
+                        <?php } ?>
+                    </div>
+
+                </div> <!-- .form-group -->
+
+            </form>
+        </div> <!-- .col-md-4 -->
+    </div> <!-- .row -->
+
+    <div class="row">
         <div class="col-md-12">
             <table class="table table-bordered table-condensed">
                 <caption class="caption">PHP Dynamic Hijri Calandar</caption>
                 <thead>
                 <tr class="header-row warning">
-                    <th class="header-cell" colspan="7">
+                    <th class="header-cell date-string-gregorian" colspan="2">
+                        <span>Today is <?= $DateStringGregorian ?></span>
+                    </th>
+                    <th class="header-cell" colspan="3">
                         <span class="month-name-gregorian"><?= $textmonth . "&nbsp;" . $year ?></span>
                         <br>
                         <span class="month-name-hijri"><?= $smon_hijri ?></span>
+                    </th>
+                    <th class="header-cell date-string-hijri" colspan="2">
+                            <span>اليوم هو <?= $DateStringHijri ?></span>
                     </th>
                 </tr>
                 <tr class="week-days-row warning">
@@ -234,7 +307,7 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                         </td>
                     <?php endif; ?>
 
-                    <td class=" date-cell <?= $i == $today ? 'danger today' : 'active' ?>">
+                    <td class=" date-cell <?= $today == $i ? 'danger today' : 'active' ?>">
                         <?php
                         $date_hijri = date("$year-$month-$i");
                         list ($HDays, $HMonths, $HYear) = Hijri($date_hijri);

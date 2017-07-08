@@ -1,16 +1,29 @@
+body {
+    padding-top: 50px;
+}
+
 .header-row {
 
 }
-
-.header-cell {
+table > thead > tr > th.header-cell {
     text-align: center;
+    vertical-align: middle;
     /*background-color: lightyellow;*/
 }
 
-.month-name-gregorian {
-    color: black;
-    font-weight: bold;
-    font-size: 1.5em;
+.date-string-gregorian {
+
+}
+table > thead > tr > th.header-cell.date-string-hijri {
+    text-align: right;
+    direction: rtl;
+    vertical-align: text-top;
+    color:maroon;
+}
+table > thead > tr > th.header-cell.date-string-gregorian {
+    text-align: left;
+    vertical-align: text-top;
+    color:maroon;
 }
 
 .month-name-hijri {
