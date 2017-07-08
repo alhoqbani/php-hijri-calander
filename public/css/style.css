@@ -1,0 +1,32 @@
+.header-row {
+
+}
+
+.header-cell {
+    text-align: center;
+    background-color: lightyellow;
+}
+
+.month-name-gregorian {
+    color: black;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.month-name-hijri {
+    color: maroon;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.week-days-cell {
+    background-color: #F5F4D3;
+    font-family: Verdana, serif;
+    text-align: center;
+    width: 10%;
+    font-weight: bold;
+}
+
+.week-days-row {
+
+}

@@ -58,8 +58,6 @@ $defaultwbgcolor = isset($defaultwbgcolor) ? $defaultwbgcolor : "#F5F4D3";
 $todayfontcolor = isset($todayfontcolor) ? $todayfontcolor : "#000000";
 $todaybgcolor = isset($todaybgcolor) ? $todaybgcolor : "#F2BFBF";
 $monthcolor = isset($monthcolor) ? $monthcolor : "#000000";
-$relfontsize = isset($relfontsize) ? $relfontsize : "1";
-$cssfontsize = isset($cssfontsize) ? $cssfontsize : "7pt";
 
 // obtain month, today date etc
 $month = (isset($month)) ? $month : date("n", time());
@@ -149,20 +147,20 @@ if ($syear_hijridone == $syear_hijridlast) {
 //checking if span of month is only one or two or three hijri months
 
 if (($smon_hijridone == $smon_hijridmiddle) AND ($smon_hijridmiddle == $smon_hijridlast)) {
-    $smon_hijri = "<div style=\"color:red\">" . $smon_hijridone . "&nbsp;" . $syear_hijridlast . "</div>";
+    $smon_hijri = "{$smon_hijridone} {$syear_hijridlast}";
 }
 
 if (($smon_hijridone == $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hijridlast)) {
-    $smon_hijri = "<div style=\"color:red\">" . $smon_hijridone . "&nbsp;" . $syear_hijridone . "-" . $smon_hijridlast . "&nbsp;" . $syear_hijridlast . "</div>";
+    $smon_hijri = "{$smon_hijridone} {$syear_hijridone} - {$smon_hijridlast} {$syear_hijridlast}";
 }
 
 
 if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle == $smon_hijridlast)) {
-    $smon_hijri = "<div style=\"color:red\">" . $smon_hijridone . "&nbsp;" . $syear_hijridone . "-" . $smon_hijridlast . "&nbsp;" . $syear_hijridlast . "</div>";
+    $smon_hijri = "{$smon_hijridone} {$syear_hijridone} - {$smon_hijridlast} {$syear_hijridlast}";
 }
 
 if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hijridlast)) {
-    $smon_hijri = "<div style=\"color:red\">" . $smon_hijridone . "&nbsp;" . $syear_hijridone . "-" . "-" . $smon_hijridmiddle . "-" . $smon_hijridlast . "&nbsp;" . $syear_hijridlast . "</div>";
+    $smon_hijri = "{$smon_hijridone} {$syear_hijridone} - {$smon_hijridmiddle} - {$smon_hijridlast} {$syear_hijridlast}";
 }
 
 // next part of code generates calendar
@@ -180,75 +178,61 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
               integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
               crossorigin="anonymous">
-        <link rel="stylesheet" href="/css/style.css">
-
-
-        <style>
-            .days-name {
-                background-color: <?= $defaultwbgcolor ?>;
-                font-family: <?= $fontfamily ?>"
-                text-align: center;
-                width: 10%;
-                font-weight: bold;
-                text-align: center;
-            }
-
-        </style>
+        <link rel="stylesheet" href="css/style.css">
+        
     </head>
 
     <body>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <table border="1" cellpadding="0" cellspacing="0" width="100%"
-                       bgcolor='white'
-                       valign='top'>
-                    <tr>
-                        <td bgcolor="#C6D4E5" colspan="7" align="center">
-                            <div style="color:<?= $monthcolor ?>">
-                                <b><?=
-                                    $textmonth . "&nbsp;" . $year . "<br />" . $smon_hijri
-                                    ?></b>
-                            </div>
-                        </td>
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                    <tr class="header-row">
+                        <th class="header-cell" colspan="7">
+                            <span class="month-name-gregorian"><?= $textmonth . "&nbsp;" . $year ?></span>
+                            <br>
+                            <span class="month-name-hijri"><?= $smon_hijri ?></span>
+                        </th>
                     </tr>
-                    <tr>
-                        <td class="days-name">
+                    <tr class="week-days-row">
+                        <th class="week-days-cell">
                             <div>
-                                <b> S </b>
+                                S
                             </div>
-                        </td>
-                        <td class="days-name">
+                        </th>
+                        <th class="week-days-cell">
                             <div>
-                                <b> M </b>
+                                M
                             </div>
-                        </td>
-                        <td class="days-name">
+                        </th>
+                        <th class="week-days-cell">
                             <div>
-                                <b> T </b>
+                                T
                             </div>
-                        </td>
-                        <td class="days-name">
+                        </th>
+                        <th class="week-days-cell">
                             <div>
-                                <b> W </b>
+                                W
                             </div>
-                        </td>
-                        <td class="days-name">
+                        </th>
+                        <th class="week-days-cell">
                             <div>
-                                <b> T </b>
+                                T
                             </div>
-                        </td>
-                        <td class="days-name">
+                        </th>
+                        <th class="week-days-cell">
                             <div>
-                                <b> F </b>
+                                F
                             </div>
-                        </td>
-                        <td class="days-name">
+                        </th>
+                        <th class="week-days-cell">
                             <div>
-                                <b> S </b>
+                                S
                             </div>
-                        </td>
+                        </th>
                     </tr>
+                    </thead>
                     
                     <?php
                     if ($dayone != 0) {
@@ -341,11 +325,12 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
         </div> <!-- .row -->
     </div> <!-- .container -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-    <script src="/js/script.js"></script>
+    <script src="js/script.js"></script>
+
     </body>
     </html>
 
