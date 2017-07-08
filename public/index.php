@@ -287,7 +287,7 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                     <div class="col-sm-10">
                         <select class="form-control" id="month" name="month">
                             <?php foreach ($monthnames as $month) : ?>
-                                <option value="<?= $month ?>"><?= $month ?></option>
+                                <option value="<?= $month ?>" <?= $textmonth == $month ? 'selected': '' ?>><?= $month ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
