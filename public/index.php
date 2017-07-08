@@ -81,6 +81,16 @@ $mname = [
     "Zul Hijja",
 ];
 
+$arabicDays = [
+  'الأحد',
+  'الإثنين',
+  'الثلاثاء',
+  'الأربعاء',
+  'الخميس',
+  'الجمعة',
+  'السبت'
+];
+
 $year = $_GET['year'] ?? null;
 $monthName = $_GET['month'] ?? null;
 
@@ -99,6 +109,14 @@ $year = (isset($year)) ? $year : $currentYear;
 
 $today = (isset($today)) ? $today : date("j", time());
 $today = ($month == $currentMonth && $year == $currentYear) ? $today : 32;
+
+// Get current Date String
+$date_hijri = date("$currentYear-$currentMonth-$today");
+list ($HDays, $HMonths, $HYear) = Hijri($date_hijri);
+
+$currentDayIndex = date('w', time());
+$DateStringHijri = $arabicDays[$currentDayIndex] . " $HDays-$HMonths-$HYear هـ ";
+$DateStringGregorian = date('l F j, Y', time());
 
 // Setting how many days each month has
 if ((($month < 8) && ($month % 2 == 1)) || (($month > 7) && ($month % 2 == 0))) {
@@ -176,6 +194,7 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
+            <p>Change the month:</p>
             <form class="form-inline" action="<?= $_SERVER['PHP_SELF'] ?>" method="get" role="form">
                 <div class="form-group form-group-sm">
                     <label for="year" class="col-sm-1 control-label input-sm">Year</label>
@@ -196,10 +215,12 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                         </select>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <button type="submit" class="btn btn-primary btn-xs">Select</button>
-                        <?php if($month != $currentMonth || $year != $currentYear) { ?>
-                            <a href="<?= $_SERVER['PHP_SELF'] ?>" class="btn btn-success btn-xs">Today</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <?php if ($month != $currentMonth || $year != $currentYear) { ?>
+                            <a href="<?= $_SERVER['PHP_SELF'] ?>" class="btn btn-success btn-xs pull-left">current month</a>
                         <?php } ?>
                     </div>
 
@@ -215,10 +236,16 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                 <caption class="caption">PHP Dynamic Hijri Calandar</caption>
                 <thead>
                 <tr class="header-row warning">
-                    <th class="header-cell" colspan="7">
+                    <th class="header-cell date-string-gregorian" colspan="2">
+                        <span>Today is <?= $DateStringGregorian ?></span>
+                    </th>
+                    <th class="header-cell" colspan="3">
                         <span class="month-name-gregorian"><?= $textmonth . "&nbsp;" . $year ?></span>
                         <br>
                         <span class="month-name-hijri"><?= $smon_hijri ?></span>
+                    </th>
+                    <th class="header-cell date-string-hijri" colspan="2">
+                            <span>اليوم هو <?= $DateStringHijri ?></span>
                     </th>
                 </tr>
                 <tr class="week-days-row warning">
