@@ -81,6 +81,12 @@ $mname = [
     "Zul Hijja",
 ];
 
+$monthName = $_GET['month'] ?? null;
+
+if ($key = array_search($monthName, $monthnames)) {
+    $month = ++$key;
+}
+
 // obtain month, today date etc
 $month = (isset($month)) ? $month : date("n", time());
 $textmonth = $monthnames[$month - 1];
@@ -273,6 +279,25 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                 </table>
             </div> <!-- .col-md-12 -->
         </div> <!-- .row -->
+        
+        <div class="row">
+            <div class="col-md-4">
+                <form action="<?= $_SERVER['PHP_SELF'] ?>" method="get" role="form">
+                    <div class="form-group">
+                        <label for="month" class="col-sm-2 control-label">Month</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="month" name="month">
+                                <?php foreach ($monthnames as $month) : ?>
+                                    <option value="<?= $month ?>"><?= $month ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div> <!-- .col-md-4 -->
+        </div> <!-- .row -->
+        
     </div> <!-- .container -->
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
