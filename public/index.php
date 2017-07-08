@@ -92,7 +92,10 @@ $year = $_GET['year'] ?? null;
 // obtain month, today date etc
 $month = (isset($month)) ? $month : date("n", time());
 $textmonth = $monthnames[$month - 1];
-$year = (isset($year)) ? $year : date("Y", time());
+
+$currentYear = date("Y", time());
+$year = (isset($year)) ? $year : $currentYear;
+
 $today = (isset($today)) ? $today : date("j", time());
 $today = ($month == date("n", time())) ? $today : 32;
 
@@ -299,7 +302,7 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                     <label for="year" class="col-sm-2 control-label">Year</label>
                     <div class="col-sm-10">
                         <select class="form-control" id="year" name="year">
-                            <?php foreach (range(2000, 2020) as $yearOption) : ?>
+                            <?php foreach (range($currentYear - 5, $currentYear + 5) as $yearOption) : ?>
                                 <option value="<?= $yearOption ?>" <?= $textmonth == $month ? 'selected' : '' ?>><?= $yearOption ?></option>
                             <?php endforeach; ?>
                         </select>
