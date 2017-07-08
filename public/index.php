@@ -3,6 +3,7 @@
 http://redacacia.wordpress.com tayeb.habib@gmail.com
 a special thanks to KHALED MAMDOUH www.vbzoom.com
 for Hijri Conversion function
+Updated by Hamoud Alhoqbani, h.alhoqbani@gmail.com 2017
 */
 
 // Hijri conversion function
@@ -82,17 +83,17 @@ $mname = [
 ];
 
 $arabicDays = [
-  'الأحد',
-  'الإثنين',
-  'الثلاثاء',
-  'الأربعاء',
-  'الخميس',
-  'الجمعة',
-  'السبت'
+    'الأحد',
+    'الإثنين',
+    'الثلاثاء',
+    'الأربعاء',
+    'الخميس',
+    'الجمعة',
+    'السبت',
 ];
 
-$year = $_GET['year'] ?? null;
-$monthName = $_GET['month'] ?? null;
+$year = isset($_GET['year']) ? $_GET['year'] : null;
+$monthName = isset($_GET['month']) ? $_GET['month'] : null;
 
 if ($key = array_search($monthName, $monthnames)) {
     $month = ++$key;
@@ -219,7 +220,8 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                     </div>
                     <div class="col-sm-2">
                         <?php if ($month != $currentMonth || $year != $currentYear) { ?>
-                            <a href="<?= $_SERVER['PHP_SELF'] ?>" class="btn btn-success btn-xs pull-left">current month</a>
+                            <a href="<?= $_SERVER['PHP_SELF'] ?>" class="btn btn-success btn-xs pull-left">current
+                                month</a>
                         <?php } ?>
                     </div>
 
@@ -244,7 +246,7 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                         <span class="month-name-hijri"><?= $smon_hijri ?></span>
                     </th>
                     <th class="header-cell date-string-hijri" colspan="2">
-                            <span>اليوم هو <?= $DateStringHijri ?></span>
+                        <span>اليوم هو <?= $DateStringHijri ?></span>
                     </th>
                 </tr>
                 <tr class="week-days-row warning">
