@@ -87,6 +87,8 @@ if ($key = array_search($monthName, $monthnames)) {
     $month = ++$key;
 }
 
+$year = $_GET['year'] ?? null;
+
 // obtain month, today date etc
 $month = (isset($month)) ? $month : date("n", time());
 $textmonth = $monthnames[$month - 1];
@@ -287,11 +289,23 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                     <div class="col-sm-10">
                         <select class="form-control" id="month" name="month">
                             <?php foreach ($monthnames as $month) : ?>
-                                <option value="<?= $month ?>" <?= $textmonth == $month ? 'selected': '' ?>><?= $month ?></option>
+                                <option value="<?= $month ?>" <?= $textmonth == $month ? 'selected' : '' ?>><?= $month ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="year" class="col-sm-2 control-label">Year</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="year" name="year">
+                            <?php foreach (range(2000, 2020) as $yearOption) : ?>
+                                <option value="<?= $yearOption ?>" <?= $textmonth == $month ? 'selected' : '' ?>><?= $yearOption ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div> <!-- .col-md-4 -->
