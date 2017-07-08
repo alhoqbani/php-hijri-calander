@@ -80,7 +80,7 @@ $mname = [
     "Zul Qida",
     "Zul Hijja",
 ];
-
+$month = 9;
 // obtain month, today date etc
 $month = (isset($month)) ? $month : date("n", time());
 $textmonth = $monthnames[$month - 1];
@@ -218,9 +218,7 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                     if ($dayone != 0) {
                         $span1 = $dayone;
                     }
-                    if (6 - $daylast != 0) {
-                        $span2 = 6 - $daylast;
-                    }
+                    $span2 = (6 - $daylast != 0) ? 6 - $daylast : 0;
                     ?>
                     
                     <?php for ($i = 1; $i <= $days; $i++) : ?>
@@ -258,12 +256,13 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                             <br>
                             <span class="date-hijri text-danger"><?= $HDays ?></span>
                         </td>
-                        <?php if ($i == $days): ?>
-                            <?php if ($span2 > 0) ?>
+                        <?php if ($i == $days){ ?>
+                            <?php if ($span2 > 0) { ?>
                                 <td class="empty-cell" colspan="<?= $span2 ?>">
                                 &nbsp;
                             </td>
-                        <?php endif; ?>
+                            <?php } ?>
+                        <?php } ?>
                         
                         <?php if ($dayofweek == 6 || $i == $days): ?>
                             </tr>
