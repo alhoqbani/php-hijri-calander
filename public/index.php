@@ -81,13 +81,13 @@ $mname = [
     "Zul Hijja",
 ];
 
+$year = $_GET['year'] ?? null;
 $monthName = $_GET['month'] ?? null;
 
 if ($key = array_search($monthName, $monthnames)) {
     $month = ++$key;
 }
 
-$year = $_GET['year'] ?? null;
 
 // obtain month, today date etc
 $currentMonth = date("n", time());
@@ -312,6 +312,7 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
 
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+                <a href="<?= $_SERVER['PHP_SELF'] ?>" class="btn btn-success">Today</a>
         </div> <!-- .col-md-4 -->
     </div> <!-- .row -->
 
