@@ -1,10 +1,9 @@
 <?php
-function dd(...$data)
-{
-    foreach ($data as $d) {
-        die(dump($d));
-    }
-}
+/* Hijri-Gregorian Calendar v.1.0. by Tayeb Habib
+http://redacacia.wordpress.com tayeb.habib@gmail.com
+a special thanks to KHALED MAMDOUH www.vbzoom.com
+for Hijri Conversion function
+*/
 
 // Hijri conversion function
 // COPYRIGHT 2002 BY KHALED MAMDOUH www.vbzoom.com
@@ -42,25 +41,16 @@ function Hijri($GetDate)
 }
 
 // end of Hijri Conversion function
-?>
-<?php
-/* Hijri-Gregorian Calendar v.1.0. by Tayeb Habib
-http://redacacia.wordpress.com tayeb.habib@gmail.com
-a special thanks to KHALED MAMDOUH www.vbzoom.com
-for Hijri Conversion function
-*/
 
-//set here font, background etc for the calendar
-$fontfamily = isset($fontfamily) ? $fontfamily : "Verdana";
-$defaultfontcolor = isset($defaultfontcolor) ? $defaultfontcolor : "#000000";
-$defaultbgcolor = isset($defaultbgcolor) ? $defaultbgcolor : "#E0E0E0";
-$defaultwbgcolor = isset($defaultwbgcolor) ? $defaultwbgcolor : "#F5F4D3";
-$todayfontcolor = isset($todayfontcolor) ? $todayfontcolor : "#000000";
-$todaybgcolor = isset($todaybgcolor) ? $todaybgcolor : "#F2BFBF";
-$monthcolor = isset($monthcolor) ? $monthcolor : "#000000";
+// For debugging
+function dd(...$data)
+{
+    foreach ($data as $d) {
+        die(var_dump($d));
+    }
+}
 
-// obtain month, today date etc
-$month = (isset($month)) ? $month : date("n", time());
+// The Names of Gregorian months
 $monthnames = [
     "January",
     "February",
@@ -75,11 +65,6 @@ $monthnames = [
     "November",
     "December",
 ];
-$textmonth = $monthnames[$month - 1];
-$year = (isset($year)) ? $year : date("Y", time());
-$today = (isset($today)) ? $today : date("j", time());
-$today = ($month == date("n", time())) ? $today : 32;
-
 // The Names of Hijri months
 $mname = [
     "Muharram",
@@ -95,20 +80,21 @@ $mname = [
     "Zul Qida",
     "Zul Hijja",
 ];
-// End of the names of Hijri months
+
+// obtain month, today date etc
+$month = (isset($month)) ? $month : date("n", time());
+$textmonth = $monthnames[$month - 1];
+$year = (isset($year)) ? $year : date("Y", time());
+$today = (isset($today)) ? $today : date("j", time());
+$today = ($month == date("n", time())) ? $today : 32;
 
 // Setting how many days each month has
-if ((($month < 8) && ($month % 2 == 1)) || (($month > 7) && ($month % 2 ==
-            0))
-) {
+if ((($month < 8) && ($month % 2 == 1)) || (($month > 7) && ($month % 2 == 0))) {
     $days = 31;
 }
-if ((($month < 8) && ($month % 2 == 0)) || (($month > 7) && ($month % 2 ==
-            1))
-) {
+if ((($month < 8) && ($month % 2 == 0)) || (($month > 7) && ($month % 2 == 1))) {
     $days = 30;
 }
-
 //checking leap year to adjust february days
 if ($month == 2) {
     $days = (date("L", time())) ? 29 : 28;
@@ -120,9 +106,7 @@ $middleday = intval(($days - 1) / 2);
 
 //checking the hijri month on beginning of gregorian calendar
 $date_hijri = date("$year-$month-1");
-
 list ($HDays, $HMonths, $HYear) = Hijri($date_hijri);
-
 $smon_hijridone = $mname[$HMonths - 1];
 $syear_hijridone = $HYear;
 
@@ -132,20 +116,18 @@ list ($HDays, $HMonths, $HYear) = Hijri($date_hijri);
 $smon_hijridlast = $mname[$HMonths - 1];
 $syear_hijridlast = $HYear;
 
-
 //checking the hijri month on middle of gregorian calendar
 $date_hijri = date("$year-$month-$middleday");
 list ($HDays, $HMonths, $HYear) = Hijri($date_hijri);
 $smon_hijridmiddle = $mname[$HMonths - 1];
 $syear_hijridmiddle = $HYear;
 
-
 // checking if there's a span of a year
 if ($syear_hijridone == $syear_hijridlast) {
     $syear_hijridone = "";
 }
-//checking if span of month is only one or two or three hijri months
 
+//checking if span of month is only one or two or three hijri months
 if (($smon_hijridone == $smon_hijridmiddle) AND ($smon_hijridmiddle == $smon_hijridlast)) {
     $smon_hijri = "{$smon_hijridone} {$syear_hijridlast}";
 }
@@ -153,7 +135,6 @@ if (($smon_hijridone == $smon_hijridmiddle) AND ($smon_hijridmiddle == $smon_hij
 if (($smon_hijridone == $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hijridlast)) {
     $smon_hijri = "{$smon_hijridone} {$syear_hijridone} - {$smon_hijridlast} {$syear_hijridlast}";
 }
-
 
 if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle == $smon_hijridlast)) {
     $smon_hijri = "{$smon_hijridone} {$syear_hijridone} - {$smon_hijridlast} {$syear_hijridlast}";
@@ -171,17 +152,14 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>Bootstrap 101 Template</title>
+        <title>Hijri Calnder for <?= $textmonth . "&nbsp;" . $year ?></title>
 
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
               integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
               crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css">
-
     </head>
-
     <body>
     <div class="container">
         <div class="row">
@@ -249,22 +227,6 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                         <?php
                         $dayofweek = date("w", mktime(1, 1, 1, $month, $i, $year));
                         
-                        $x = strlen($i);
-                        if ($x == 1) {
-                            $b = "0" . $i;
-                        }
-                        if ($x == 2) {
-                            $b = $i;
-                        }
-                        $x = strlen($month);
-                        if ($x == 1) {
-                            $c = "0" . $month;
-                        }
-                        if ($x == 2) {
-                            $c = $month;
-                        }
-                        $data = $year . "-" . $c . "-" . $b;
-                        
                         if ($i == 1 || $dayofweek == 0) : ?>
                             <tr class="date-row">
                         <?php endif; ?>
@@ -321,27 +283,3 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
 
     </body>
     </html>
-
-
-<?php
-$ano = str_replace("20", "", $year);
-
-$x = strlen($today);
-if ($x == 1) {
-    $b = "0" . $today;
-}
-if ($x == 2) {
-    $b = $today;
-}
-//echo $b;
-$x = strlen($month);
-if ($x == 1) {
-    $c = "0" . $month;
-}
-if ($x == 2) {
-    $c = $month;
-}
-//echo $c;
-
-$data = $year . $c . $b;
-?>
