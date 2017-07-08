@@ -152,159 +152,158 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
 
 // next part of code generates calendar
 ?>
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Hijri Calnder for <?= $textmonth . "&nbsp;" . $year ?></title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hijri Calnder for <?= $textmonth . "&nbsp;" . $year ?></title>
 
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-bordered table-condensed">
-                    <caption class="caption">PHP Dynamic Hijri Calandar</caption>
-                    <thead>
-                    <tr class="header-row warning">
-                        <th class="header-cell" colspan="7">
-                            <span class="month-name-gregorian"><?= $textmonth . "&nbsp;" . $year ?></span>
-                            <br>
-                            <span class="month-name-hijri"><?= $smon_hijri ?></span>
-                        </th>
-                    </tr>
-                    <tr class="week-days-row warning">
-                        <th class="week-days-cell">
-                            <div>
-                                S
-                            </div>
-                        </th>
-                        <th class="week-days-cell">
-                            <div>
-                                M
-                            </div>
-                        </th>
-                        <th class="week-days-cell">
-                            <div>
-                                T
-                            </div>
-                        </th>
-                        <th class="week-days-cell">
-                            <div>
-                                W
-                            </div>
-                        </th>
-                        <th class="week-days-cell">
-                            <div>
-                                T
-                            </div>
-                        </th>
-                        <th class="week-days-cell">
-                            <div>
-                                F
-                            </div>
-                        </th>
-                        <th class="week-days-cell">
-                            <div>
-                                S
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-condensed">
+                <caption class="caption">PHP Dynamic Hijri Calandar</caption>
+                <thead>
+                <tr class="header-row warning">
+                    <th class="header-cell" colspan="7">
+                        <span class="month-name-gregorian"><?= $textmonth . "&nbsp;" . $year ?></span>
+                        <br>
+                        <span class="month-name-hijri"><?= $smon_hijri ?></span>
+                    </th>
+                </tr>
+                <tr class="week-days-row warning">
+                    <th class="week-days-cell">
+                        <div>
+                            S
+                        </div>
+                    </th>
+                    <th class="week-days-cell">
+                        <div>
+                            M
+                        </div>
+                    </th>
+                    <th class="week-days-cell">
+                        <div>
+                            T
+                        </div>
+                    </th>
+                    <th class="week-days-cell">
+                        <div>
+                            W
+                        </div>
+                    </th>
+                    <th class="week-days-cell">
+                        <div>
+                            T
+                        </div>
+                    </th>
+                    <th class="week-days-cell">
+                        <div>
+                            F
+                        </div>
+                    </th>
+                    <th class="week-days-cell">
+                        <div>
+                            S
+                        </div>
+                    </th>
+                </tr>
+                </thead>
 
-                    <tbody>
-                    <?php // Span
-                    if ($dayone != 0) {
-                        $span1 = $dayone;
-                    }
-                    if (6 - $daylast != 0) {
-                        $span2 = 6 - $daylast;
-                    }
-                    ?>
+                <tbody>
+                <?php // Span
+                if ($dayone != 0) {
+                    $span1 = $dayone;
+                }
+                $span2 = (6 - $daylast != 0) ? 6 - $daylast : 0;
+                ?>
+                
+                <?php for ($i = 1; $i <= $days; $i++) : ?>
+                    <?php
+                    $dayofweek = date("w", mktime(1, 1, 1, $month, $i, $year));
                     
-                    <?php for ($i = 1; $i <= $days; $i++) : ?>
-                        <?php
-                        $dayofweek = date("w", mktime(1, 1, 1, $month, $i, $year));
-                        
-                        if ($i == 1 || $dayofweek == 0) : ?>
-                            <tr class="date-row">
-                        <?php endif; ?>
-                        <?php if ($dayone && $i == 1) : ?>
-                            <td class="empty-cell" colspan="<?= $dayone ?>">
-                                &nbsp;
-                            </td>
-                        <?php endif; ?>
+                    if ($i == 1 || $dayofweek == 0) : ?>
+                        <tr class="date-row">
+                    <?php endif; ?>
+                    <?php if ($dayone && $i == 1) : ?>
+                        <td class="empty-cell" colspan="<?= $dayone ?>">
+                            &nbsp;
+                        </td>
+                    <?php endif; ?>
 
-                        <td class=" date-cell <?= $i == $today ? 'danger today' : 'active' ?>">
-                            <?php
+                    <td class=" date-cell <?= $i == $today ? 'danger today' : 'active' ?>">
+                        <?php
+                        $date_hijri = date("$year-$month-$i");
+                        list ($HDays, $HMonths, $HYear) = Hijri($date_hijri);
+                        
+                        // For last day of hijri month
+                        if ($HDays == 30) {
+                            
+                            $i = $i + 1;
                             $date_hijri = date("$year-$month-$i");
                             list ($HDays, $HMonths, $HYear) = Hijri($date_hijri);
-                            
-                            // For last day of hijri month
-                            if ($HDays == 30) {
-                                
-                                $i = $i + 1;
-                                $date_hijri = date("$year-$month-$i");
-                                list ($HDays, $HMonths, $HYear) = Hijri($date_hijri);
-                                if ($HDays == 2) {
-                                    $HDays = 1;
-                                } else {
-                                    $HDays = 30;
-                                }
-                                $i = $i - 1;
-                            } ?>
-                            <span class="date-gregorian"><?= $i ?></span>
-                            <br>
-                            <span class="date-hijri text-danger"><?= $HDays ?></span>
-                        </td>
-                        <?php if ($i == $days): ?>
-                            <?php if ($span2 > 0) ?>
-                                <td class="empty-cell" colspan="<?= $span2 ?>">
+                            if ($HDays == 2) {
+                                $HDays = 1;
+                            } else {
+                                $HDays = 30;
+                            }
+                            $i = $i - 1;
+                        } ?>
+                        <span class="date-gregorian"><?= $i ?></span>
+                        <br>
+                        <span class="date-hijri text-danger"><?= $HDays ?></span>
+                    </td>
+                    <?php if ($i == $days) { ?>
+                        <?php if ($span2 > 0) { ?>
+                            <td class="empty-cell" colspan="<?= $span2 ?>">
                                 &nbsp;
                             </td>
-                        <?php endif; ?>
-                        
-                        <?php if ($dayofweek == 6 || $i == $days): ?>
-                            </tr>
-                        <?php endif; ?>
-                    <?php endfor; ?>
-                    </tbody>
-                </table>
-            </div> <!-- .col-md-12 -->
-        </div> <!-- .row -->
-        
-        <div class="row">
-            <div class="col-md-4">
-                <form action="<?= $_SERVER['PHP_SELF'] ?>" method="get" role="form">
-                    <div class="form-group">
-                        <label for="month" class="col-sm-2 control-label">Month</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" id="month" name="month">
-                                <?php foreach ($monthnames as $month) : ?>
-                                    <option value="<?= $month ?>"><?= $month ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                        <?php } ?>
+                    <?php } ?>
+                    
+                    <?php if ($dayofweek == 6 || $i == $days): ?>
+                        </tr>
+                    <?php endif; ?>
+                <?php endfor; ?>
+                </tbody>
+            </table>
+        </div> <!-- .col-md-12 -->
+    </div> <!-- .row -->
+
+    <div class="row">
+        <div class="col-md-4">
+            <form action="<?= $_SERVER['PHP_SELF'] ?>" method="get" role="form">
+                <div class="form-group">
+                    <label for="month" class="col-sm-2 control-label">Month</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="month" name="month">
+                            <?php foreach ($monthnames as $month) : ?>
+                                <option value="<?= $month ?>"><?= $month ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div> <!-- .col-md-4 -->
-        </div> <!-- .row -->
-        
-    </div> <!-- .container -->
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div> <!-- .col-md-4 -->
+    </div> <!-- .row -->
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
+</div> <!-- .container -->
 
-    </body>
-    </html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>
