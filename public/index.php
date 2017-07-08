@@ -179,7 +179,7 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
               integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
               crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css">
-        
+
     </head>
 
     <body>
@@ -187,6 +187,7 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-bordered table-condensed">
+                    <caption class="caption">PHP Dynamic Hijri Calandar</caption>
                     <thead>
                     <tr class="header-row">
                         <th class="header-cell" colspan="7">
