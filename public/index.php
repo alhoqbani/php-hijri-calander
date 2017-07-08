@@ -303,7 +303,7 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                     <div class="col-sm-10">
                         <select class="form-control" id="year" name="year">
                             <?php foreach (range($currentYear - 5, $currentYear + 5) as $yearOption) : ?>
-                                <option value="<?= $yearOption ?>" <?= $textmonth == $month ? 'selected' : '' ?>><?= $yearOption ?></option>
+                                <option value="<?= $yearOption ?>" <?= $yearOption == $year ? 'selected' : '' ?>><?= $yearOption ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
