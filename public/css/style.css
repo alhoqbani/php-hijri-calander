@@ -4,7 +4,7 @@
 
 .header-cell {
     text-align: center;
-    background-color: lightyellow;
+    /*background-color: lightyellow;*/
 }
 
 .month-name-gregorian {
@@ -28,5 +28,25 @@
 }
 
 .week-days-row {
+
+}
+
+.date-row {
+    background-color: #E0E0E0;
+}
+
+.date-cell {
+    text-align: center;
+}
+
+.empty-cell {
+    background-color: #999999;
+}
+
+.date-gregorian {
+
+}
+
+.date-hijri {
 
 }

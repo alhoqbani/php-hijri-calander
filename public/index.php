@@ -189,14 +189,14 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                 <table class="table table-bordered table-condensed">
                     <caption class="caption">PHP Dynamic Hijri Calandar</caption>
                     <thead>
-                    <tr class="header-row">
+                    <tr class="header-row warning">
                         <th class="header-cell" colspan="7">
                             <span class="month-name-gregorian"><?= $textmonth . "&nbsp;" . $year ?></span>
                             <br>
                             <span class="month-name-hijri"><?= $smon_hijri ?></span>
                         </th>
                     </tr>
-                    <tr class="week-days-row">
+                    <tr class="week-days-row warning">
                         <th class="week-days-cell">
                             <div>
                                 S
@@ -234,8 +234,9 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                         </th>
                     </tr>
                     </thead>
-                    
-                    <?php
+
+                    <tbody>
+                    <?php // Span
                     if ($dayone != 0) {
                         $span1 = $dayone;
                     }
@@ -248,19 +249,6 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                         <?php
                         $dayofweek = date("w", mktime(1, 1, 1, $month, $i, $year));
                         
-                        $width = "14%";
-                        
-                        if ($dayofweek == 0 || $dayofweek == 6) {
-                            $width = "15%";
-                        }
-                        if ($i == $today) {
-                            $fontcolor = $todayfontcolor;
-                            $bgcellcolor = $todaybgcolor;
-                        }
-                        if ($i != $today) { // Don't need this
-                            $fontcolor = $defaultfontcolor;
-                            $bgcellcolor = $defaultbgcolor;
-                        }
                         $x = strlen($i);
                         if ($x == 1) {
                             $b = "0" . $i;
@@ -277,41 +265,40 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                         }
                         $data = $year . "-" . $c . "-" . $b;
                         
-                        if ($i == 1 || $dayofweek == 0) : $condition = '$i = 1' ?>
-                            <tr bgcolor="<?= $defaultbgcolor ?>">
+                        if ($i == 1 || $dayofweek == 0) : ?>
+                            <tr class="date-row">
                         <?php endif; ?>
-                        <?php if ($span1 > 0 && $i == 1) : ?>
-                            <td align='left' bgcolor='#999999' colspan="<?= $span1 ?>">
+                        <?php if ($dayone && $i == 1) : ?>
+                            <td class="empty-cell" colspan="<?= $dayone ?>">
                                 &nbsp;
                             </td>
                         <?php endif; ?>
 
-                        <td bgcolor="<?= $bgcellcolor ?>" valign="middle" align="center"
-                            width="<?= $width ?>">
-                            <div style="color:<?= $fontcolor ?>; font-family: <?= $fontfamily ?>">
-                                <?php
+                        <td class=" date-cell <?= $i == $today ? 'danger today' : 'active' ?>">
+                            <?php
+                            $date_hijri = date("$year-$month-$i");
+                            list ($HDays, $HMonths, $HYear) = Hijri($date_hijri);
+                            
+                            // For last day of hijri month
+                            if ($HDays == 30) {
+                                
+                                $i = $i + 1;
                                 $date_hijri = date("$year-$month-$i");
                                 list ($HDays, $HMonths, $HYear) = Hijri($date_hijri);
-                                
-                                // For last day of hijri month
-                                if ($HDays == 30) {
-                                    
-                                    $i = $i + 1;
-                                    $date_hijri = date("$year-$month-$i");
-                                    list ($HDays, $HMonths, $HYear) = Hijri($date_hijri);
-                                    if ($HDays == 2) {
-                                        $HDays = 1;
-                                    } else {
-                                        $HDays = 30;
-                                    }
-                                    $i = $i - 1;
-                                } ?>
-
-                                <span><?= $i ?></span><br><span style="color: red"><?= $HDays ?></span>
+                                if ($HDays == 2) {
+                                    $HDays = 1;
+                                } else {
+                                    $HDays = 30;
+                                }
+                                $i = $i - 1;
+                            } ?>
+                            <span class="date-gregorian"><?= $i ?></span>
+                            <br>
+                            <span class="date-hijri text-danger"><?= $HDays ?></span>
                         </td>
                         <?php if ($i == $days): ?>
                             <?php if ($span2 > 0) ?>
-                                <td align="left" bgcolor="#999999" colspan="<?= $span2 ?>">
+                                <td class="empty-cell" colspan="<?= $span2 ?>">
                                 &nbsp;
                             </td>
                         <?php endif; ?>
@@ -319,8 +306,8 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
                         <?php if ($dayofweek == 6 || $i == $days): ?>
                             </tr>
                         <?php endif; ?>
-                    <?php endfor; // Hamoud End for loop?>
-
+                    <?php endfor; ?>
+                    </tbody>
                 </table>
             </div> <!-- .col-md-12 -->
         </div> <!-- .row -->
