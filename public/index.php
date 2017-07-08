@@ -175,6 +175,41 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
 <body>
 <div class="container">
     <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <form class="form-inline" action="<?= $_SERVER['PHP_SELF'] ?>" method="get" role="form">
+                <div class="form-group form-group-sm">
+                    <label for="year" class="col-sm-1 control-label input-sm">Year</label>
+                    <div class="col-sm-2">
+                        <select class="form-control input-sm" id="year" name="year">
+                            <?php foreach (range($currentYear - 5, $currentYear + 5) as $yearOption) : ?>
+                                <option value="<?= $yearOption ?>" <?= $yearOption == $year ? 'selected' : '' ?>><?= $yearOption ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <label for="month" class="col-sm-1 control-label input-sm">Month</label>
+                    <div class="col-sm-3">
+                        <select class="form-control input-sm" id="month" name="month">
+                            <?php foreach ($monthnames as $monthOption) : ?>
+                                <option value="<?= $monthOption ?>" <?= $textmonth == $monthOption ? 'selected' : '' ?>><?= $monthOption ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary btn-xs">Select</button>
+                        <?php if($month != $currentMonth || $year != $currentYear) { ?>
+                            <a href="<?= $_SERVER['PHP_SELF'] ?>" class="btn btn-success btn-xs">Today</a>
+                        <?php } ?>
+                    </div>
+
+                </div> <!-- .form-group -->
+
+            </form>
+        </div> <!-- .col-md-4 -->
+    </div> <!-- .row -->
+
+    <div class="row">
         <div class="col-md-12">
             <table class="table table-bordered table-condensed">
                 <caption class="caption">PHP Dynamic Hijri Calandar</caption>
@@ -284,38 +319,6 @@ if (($smon_hijridone != $smon_hijridmiddle) AND ($smon_hijridmiddle != $smon_hij
             </table>
         </div> <!-- .col-md-12 -->
     </div> <!-- .row -->
-
-    <div class="row">
-        <div class="col-md-4">
-            <form action="<?= $_SERVER['PHP_SELF'] ?>" method="get" role="form">
-                <div class="form-group">
-                    <label for="month" class="col-sm-2 control-label">Month</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" id="month" name="month">
-                            <?php foreach ($monthnames as $month) : ?>
-                                <option value="<?= $month ?>" <?= $textmonth == $month ? 'selected' : '' ?>><?= $month ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="year" class="col-sm-2 control-label">Year</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" id="year" name="year">
-                            <?php foreach (range($currentYear - 5, $currentYear + 5) as $yearOption) : ?>
-                                <option value="<?= $yearOption ?>" <?= $yearOption == $year ? 'selected' : '' ?>><?= $yearOption ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-                <a href="<?= $_SERVER['PHP_SELF'] ?>" class="btn btn-success">Today</a>
-        </div> <!-- .col-md-4 -->
-    </div> <!-- .row -->
-
 </div> <!-- .container -->
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
